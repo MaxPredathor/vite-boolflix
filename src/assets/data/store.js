@@ -11,4 +11,7 @@ export const store = reactive({
     query: "star",
     api_key: "52dfd4e50346e927a3b341e688889302",
   },
+  movieList: [],
+  seriesList: [],
+  img: "https://image.tmdb.org/t/p/w300",
 });
