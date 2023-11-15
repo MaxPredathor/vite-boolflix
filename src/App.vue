@@ -12,7 +12,7 @@
         :title="movie.title"
         :titoloOriginale="movie.original_title"
         :language="movie.original_language"
-        :voto="movie.vote_average"
+        :voto="roundVoto(movie.vote_average)"
         />
       </div>
     </section>
@@ -26,7 +26,7 @@
         :title="serie.name"
         :titoloOriginale="serie.original_name"
         :language="serie.original_language"
-        :voto="serie.vote_average"
+        :voto="roundVoto(serie.vote_average)"
         />
         <div class="col-12 col-md-4 col-lg-3"
          v-for="serie in store.seriesList" :key="serie.id">
@@ -55,7 +55,6 @@ import axios from 'axios'
   methods: {
     getMoviesAndSeries(){
       this.store.movieList = []
-      this.store.seriesList = []
       const movieUrl = this.store.apiUrl + this.store.endPoint.movie
       axios.get(movieUrl, {params: this.store.params})
         .then(function (response) {
@@ -69,6 +68,7 @@ import axios from 'axios'
         .finally(function () {
         });
 
+        this.store.seriesList = []
         const seriesUrl = this.store.apiUrl + this.store.endPoint.series
         axios.get(seriesUrl, {params: this.store.params})
         .then(function (response) {
@@ -83,10 +83,15 @@ import axios from 'axios'
         });
 
       this.store.params.query = ""
+    },
+    roundVoto(voto){
+      let newVoto = voto / 2;
+      let roundedVoto = Math.round(newVoto * 2)/2;
+      return roundedVoto
     }
   },
   created(){
-   this.getMoviesAndSeries()
+    this.getMoviesAndSeries()
   }
   }
   
