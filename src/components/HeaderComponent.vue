@@ -10,8 +10,10 @@
             <li>Sfoglia per Lingua</li>
         </ul>
         <div class="d-flex justify-content-between">
-            <input class="form-control" type="text" placeholder="Cerca Generi, Titoli etc"
-            v-model="this.store.params.query" @keyup.enter="$emit('enterEmit')">
+            <i @click="" class="fa-solid fa-magnifying-glass fs-4 text-light">
+                <input ref="input" class="form-control d-none" type="text" placeholder="Cerca Generi, Titoli etc"
+                v-model="this.store.params.query" @keyup.enter="$emit('enterEmit')">
+            </i>
             <button class="btn btn-danger mx-2" @click="$emit('searchEmit')">Cerca</button>
         </div>
     </div>
@@ -24,6 +26,11 @@ import { store } from '../assets/data/store.js'
         data(){
             return{
                 store,
+            }
+        },
+        methods:{
+            expandAnimation(){
+                this.$refs.input.classList.remove('d-none')
             }
         }
     }
@@ -43,7 +50,7 @@ import { store } from '../assets/data/store.js'
             list-style: none;
 
             img{
-                width: 70%;
+                width: 15%;
 
             }
 
@@ -52,16 +59,24 @@ import { store } from '../assets/data/store.js'
                 font-weight: 400;
                 color: white;
                 padding: 0 10px;
+                cursor: pointer;
+
 
                 &:hover{
                     color: $grey_searchbar;
                 }
             }
 
+        
+        }
+        div{
+
             input{
+                width: 0;
                 background-color: $black_netflix;
                 border: 1px solid $red_netflix;
                 color: $grey_searchbar;
+                animation-name: expand;
             }
 
             input:focus, textarea:focus {
@@ -70,6 +85,13 @@ import { store } from '../assets/data/store.js'
                 outline-style: none;
             }
         }
+    }
+    @keyframes expand{
+        0% {width: 0px;}
+        25% {width: 25px;}
+        50% {width: 50px;}
+        75% {width: 75px;}
+        100% {width: 100px;}
     }
 
 </style>
