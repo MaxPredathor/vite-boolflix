@@ -1,9 +1,12 @@
 <template>
-  <div>
+  <header>
+    <HeaderComponent 
+    @enter-emit="getMoviesAndSeries()"
+    @search-emit="getMoviesAndSeries()" />
+  </header>
+  <main>
     <section id="movie" class="container">
-      <input type="text" v-model="this.store.params.query" @keyup.enter="getMoviesAndSeries()">
-      <button class="btn btn-primary ms-2" @click="getMoviesAndSeries()">Cerca</button>
-      <h2 class="fw-bold fs-3 text-danger">Movies</h2>
+      <h2 class="fw-bold fs-3 text-light">Movies</h2>
       <div class="row">
         <CardComponent 
         v-for="movie in store.movieList" :key="movie.id"
@@ -13,11 +16,13 @@
         :titoloOriginale="movie.original_title"
         :language="movie.original_language"
         :voto="roundVoto(movie.vote_average)"
+        :desc="movie.overview"
+        :adult="movie.adult"
         />
       </div>
     </section>
     <section id="series" class="container">
-      <h2 class="fw-bold fs-3 text-danger">Series</h2>
+      <h2 class="fw-bold fs-3 text-light">Series</h2>
       <div class="row">
         <CardComponent 
         v-for="serie in store.seriesList" :key="serie.id"
@@ -27,34 +32,34 @@
         :titoloOriginale="serie.original_name"
         :language="serie.original_language"
         :voto="roundVoto(serie.vote_average)"
+        :desc="serie.overview"
+        :adult="serie.adult"
         />
-        <div class="col-12 col-md-4 col-lg-3"
-         v-for="serie in store.seriesList" :key="serie.id">
-          {{ serie.name }}
-          <img :src="this.store.img + serie.poster_path" :alt="serie.title">
-        </div>
       </div>
     </section>
-  </div>
+  </main>
 </template>
 
 <script>
 import CardComponent from './components/CardComponent.vue'
+import HeaderComponent from './components/HeaderComponent.vue'
 import { store } from './assets/data/store.js'
 import axios from 'axios'
   export default {
     name: 'App',
     data(){
-    return{
-      store,
+      return{
+        store,
     }
   },
   components: {
     CardComponent,
+    HeaderComponent,
   },
   methods: {
     getMoviesAndSeries(){
       this.store.movieList = []
+      this.store.seriesList = []
       const movieUrl = this.store.apiUrl + this.store.endPoint.movie
       axios.get(movieUrl, {params: this.store.params})
         .then(function (response) {
@@ -68,19 +73,19 @@ import axios from 'axios'
         .finally(function () {
         });
 
-        this.store.seriesList = []
-        const seriesUrl = this.store.apiUrl + this.store.endPoint.series
-        axios.get(seriesUrl, {params: this.store.params})
-        .then(function (response) {
-          console.log(response.data.results);
-          store.seriesList = response.data.results
-        })
-        .catch(function (error) {
-          // handle error
-          console.log(error);
-        })
-        .finally(function () {
-        });
+        
+      const seriesUrl = this.store.apiUrl + this.store.endPoint.series
+      axios.get(seriesUrl, {params: this.store.params})
+      .then(function (response) {
+        console.log(response.data.results);
+        store.seriesList = response.data.results
+      })
+      .catch(function (error) {
+        // handle error
+        console.log(error);
+      })
+      .finally(function () {
+      });
 
       this.store.params.query = ""
     },
