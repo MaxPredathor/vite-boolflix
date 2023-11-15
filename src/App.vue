@@ -1,9 +1,9 @@
 <template>
   <div>
     <section id="movie" class="container">
-      <h2>Movies</h2>
       <input type="text" v-model="this.store.params.query" @keyup.enter="getMoviesAndSeries()">
       <button class="btn btn-primary ms-2" @click="getMoviesAndSeries()">Cerca</button>
+      <h2 class="fw-bold fs-3 text-danger">Movies</h2>
       <div class="row">
         <CardComponent 
         v-for="movie in store.movieList" :key="movie.id"
@@ -17,7 +17,7 @@
       </div>
     </section>
     <section id="series" class="container">
-      <h2>Series</h2>
+      <h2 class="fw-bold fs-3 text-danger">Series</h2>
       <div class="row">
         <CardComponent 
         v-for="serie in store.seriesList" :key="serie.id"
