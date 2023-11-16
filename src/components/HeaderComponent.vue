@@ -9,11 +9,10 @@
             <li>La mia Lista</li>
             <li>Sfoglia per Lingua</li>
         </ul>
-        <div class="d-flex justify-content-between">
-            <i @click="" class="fa-solid fa-magnifying-glass fs-4 text-light">
-                <input ref="input" class="form-control d-none" type="text" placeholder="Cerca Generi, Titoli etc"
+        <div class="d-flex justify-content-between text-light">
+            <i ref="icon" @click="expandAnimation()" class="fa-solid fa-magnifying-glass fs-4 text-light"></i>
+            <input ref="input" class="form-control d-none" type="text" placeholder="Cerca Generi, Titoli etc"
                 v-model="this.store.params.query" @keyup.enter="$emit('enterEmit')">
-            </i>
             <button class="btn btn-danger mx-2" @click="$emit('searchEmit')">Cerca</button>
         </div>
     </div>
@@ -31,6 +30,7 @@ import { store } from '../assets/data/store.js'
         methods:{
             expandAnimation(){
                 this.$refs.input.classList.remove('d-none')
+                this.$refs.icon.classList.add('d-none')
             }
         }
     }
@@ -38,6 +38,9 @@ import { store } from '../assets/data/store.js'
 
 <style lang="scss" scoped>
 @use '../assets/styles/partials/variables' as *;
+    .w-0{
+        width: 150px !important;
+    }
     .wrapper{
         display: flex;
         justify-content: space-between;
@@ -50,11 +53,12 @@ import { store } from '../assets/data/store.js'
             list-style: none;
 
             img{
-                width: 15%;
+                width: 40%;
 
             }
 
             li{
+                max-width: 200px;
                 font-size: 1.1em;
                 font-weight: 400;
                 color: white;
@@ -72,11 +76,12 @@ import { store } from '../assets/data/store.js'
         div{
 
             input{
-                width: 0;
+                width: 150px;
                 background-color: $black_netflix;
                 border: 1px solid $red_netflix;
                 color: $grey_searchbar;
                 animation-name: expand;
+                animation-duration: 2s;
             }
 
             input:focus, textarea:focus {
@@ -88,10 +93,7 @@ import { store } from '../assets/data/store.js'
     }
     @keyframes expand{
         0% {width: 0px;}
-        25% {width: 25px;}
-        50% {width: 50px;}
-        75% {width: 75px;}
-        100% {width: 100px;}
+        100% {width: 150px;}
     }
 
 </style>

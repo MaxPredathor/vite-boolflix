@@ -136,7 +136,7 @@
             .hover-div{
                 width: 100%;
                 height: 100%;
-                background-color: black;
+                background-color: $black_netflix;
                 border: 1px solid white;
                 color: white;
                 transform: rotateY(3.142rad);
