@@ -41,6 +41,7 @@
         :voto="roundVoto(movie.vote_average)"
         :desc="movie.overview"
         :adult="movie.adult"
+        :genere="movie.genre_ids"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 2290)">
@@ -63,6 +64,7 @@
         :voto="roundVoto(serie.vote_average)"
         :desc="serie.overview"
         :adult="serie.adult"
+        :genere="serie.genre_ids"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 2290)">
@@ -167,26 +169,50 @@ import axios from 'axios'
         behavior : "smooth"
       });
     },
-    getGenre(){
-      const movieGenreUrl = this.store.apiUrl + this.store.genreEndPoint.movie
-      axios.get(movieGenreUrl + this.store.api_key)
-        .then(function (response) {
-          console.log(response.data)
-          for(let i = 0; i < response.data.genres.length; i++){
-            this.store.genreList.push(response.data.genres[i])
+    // getGenre(){
+    //   const movieGenreUrl = this.store.apiUrl + this.store.genreEndPoint.movie
+    //   axios.get(movieGenreUrl + this.store.api_key)
+    //     .then(function (response) {
+    //       for(let i = 0; i < response.data.genres.length; i++){
+    //         this.store.genreList.push(response.data.genres[i])
+    //       }
+    //       console.log(this.store.genreList)
+    //     })
+    //     .catch(function (error) {
+    //       // handle error
+    //       // console.log(error);
+    //     })
+    // },
+    getGenres() {
+      const movieGenreUrl = this.store.apiUrl + this.store.genreEndPoint.movie;
+      const serieGenreUrl = this.store.apiUrl + this.store.genreEndPoint.serie;
+      const apikey = `?api_key=${this.store.params.api_key}`
+
+      Promise.all([axios.get(movieGenreUrl + apikey), axios.get(serieGenreUrl + apikey)])
+        .then((results) => {
+          const result0 = results[0].data.genres;
+          const result1 = results[1].data.genres;
+
+          for (let i = 0; i < result0.length; i++) {
+            this.store.genreList.push(result0[i]);
           }
+
+          for (let x = 0; x < result1.length; x++) {
+            this.store.genreList.push(result1[x]);
+          }
+
+          this.store.genreList = this.store.genreList.filter(
+            (genre, index, arr) =>
+              index === arr.findIndex((g) => g.id === genre.id || g.name === genre.name)
+          );
+          console.log(this.store.genreList)
         })
-        .catch(function (error) {
-          // handle error
-          // console.log(error);
-        })
-        console.log(this.store.genreList)
-    },
+    }
   },
   created(){
     this.getPopular()
     this.getMoviesAndSeries()
-    this.getGenre()
+    this.getGenres()
   },
   }
   

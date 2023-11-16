@@ -10,9 +10,11 @@
             <li>Sfoglia per Lingua</li>
         </ul>
         <div class="d-flex justify-content-between text-light">
-            <i ref="icon" @click="expandAnimation()" class="fa-solid fa-magnifying-glass fs-5 text-light pt-2"></i>
-            <input ref="input" class="form-control d-none" type="text" placeholder="Cerca: Generi, Titoli, Persone"
-                v-model="this.store.params.query" @keyup.enter="$emit('enterEmit')">
+            <i ref="icon" @click.stop="(isActive = !isActive)" :class="(isActive ? 'd-none' : 'd-inline-block')" 
+            class="fa-solid fa-magnifying-glass fs-5 text-light pt-2"></i>
+            <input ref="input" :class="(isActive ? 'd-inline-block expand' : 'd-none')"
+                class="form-control" type="text" placeholder="Cerca: Generi, Titoli, Persone"
+                v-model="this.store.params.query" @keyup.enter="$emit('enterEmit'), (isActive = !isActive)">
             <button class="btn btn-danger mx-2" @click="$emit('searchEmit')">Cerca</button>
         </div>
     </div>
@@ -25,13 +27,10 @@ import { store } from '../assets/data/store.js'
         data(){
             return{
                 store,
+                isActive: false
             }
         },
         methods:{
-            expandAnimation(){
-                this.$refs.input.classList.remove('d-none')
-                this.$refs.icon.classList.add('d-none')
-            }
         }
     }
 </script>
@@ -39,7 +38,15 @@ import { store } from '../assets/data/store.js'
 <style lang="scss" scoped>
 @use '../assets/styles/partials/variables' as *;
     .w-0{
-        width: 150px !important;
+        width: 0px !important;
+    }
+    .expand{
+        animation-name: expand;
+        animation-duration: 0.4s;
+    }
+    .revert{
+        animation-name: revert;
+        animation-duration: 0.4s;
     }
     .wrapper{
         display: flex;
@@ -50,8 +57,6 @@ import { store } from '../assets/data/store.js'
         height: 100px;
         z-index: 100;
         margin: 0;
-        background: rgb(0,0,0);
-        background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 58%, rgba(52,50,50,1) 100%);
 
         ul{
             list-style: none;
@@ -79,6 +84,10 @@ import { store } from '../assets/data/store.js'
         }
         div{
 
+            i{
+                cursor: pointer;
+            }
+
             input{
                 width: 250px;
                 height: 30px;
@@ -86,8 +95,7 @@ import { store } from '../assets/data/store.js'
                 padding-bottom: 10px;
                 background-color: $black_netflix;
                 border: 1px solid white;
-                animation-name: expand;
-                animation-duration: 0.4s;
+                color: white;
 
                 &::placeholder{
                     color: $grey_searchbar !important;
@@ -95,17 +103,15 @@ import { store } from '../assets/data/store.js'
                     line-height: 30px;
                 }
             }
-
-            input:focus, textarea:focus {
-                outline: none;
-                outline-color: none;
-                outline-style: none;
-            }
         }
     }
     @keyframes expand{
         0% {width: 0px;}
         100% {width: 250px;}
+    }
+    @keyframes revert{
+        0% {width: 250px;}
+        100% {width: 0px;}
     }
 
 </style>

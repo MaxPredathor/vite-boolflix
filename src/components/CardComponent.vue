@@ -6,8 +6,8 @@
                 <img src="/images/netflix-vertical.png" alt="PlaceHolder" v-else>
             </div>
             <div class="hover-div">
-                <p><span>Titolo: </span>{{ title }}</p>
-                <p><span>Titolo Originale: </span>{{ titoloOriginale }}</p>
+                <p><span>Titolo:</span>{{ title }}</p>
+                <p><span>Titolo Originale:</span>{{ titoloOriginale }}</p>
                 <div class="flags">
                     <p v-if="language === 'it'"><span>Lingua:</span> <img src="/images/flag-for-italy_.png" alt="italy"></p>
                     <p v-else-if="language === 'en'"><span>Lingua:</span> <img src="/images/flag-for-united-kingdom_.png" alt="united-kingdom"></p>
@@ -42,15 +42,24 @@
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 3 && voto < 4,'fa-solid fa-star': voto > 3, 'fa-regular fa-star': voto < 4}"></i>
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 4 && voto < 5,'fa-solid fa-star': voto > 4, 'fa-regular fa-star': voto < 5}"></i>
                 </p>
-                <p><span>Sinossi: </span>{{ desc }}</p>
+                <p><span>Genere:</span>
+                    <span class=" fw-light" v-for="genre in genere">{{ getGenreName(genre) }}</span>
+                </p>
+                <p><span>Sinossi:</span>{{ desc }}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { store } from '../assets/data/store.js'
     export default {
         name: 'CardComponent',
+        data(){
+            return{
+                store,
+            }
+        },
         props:{
             img:{
                 type: String,
@@ -90,8 +99,21 @@
                 type: Boolean,
                 required: false,
                 default: null
+            },
+            genere:{
+                type: Array,
+                required: false,
+                default: "No Genre Found"
             }
         },
+        methods:{
+            getGenreName(id) {
+                const finder = this.store.genreList.find((el) => el.id == id)
+                if (finder) {
+                    return finder.name;
+                }
+            }
+        }
     }
 </script>
 
@@ -143,7 +165,11 @@
                 overflow-y: auto;
 
                 span{
+                    display: inline-block;
                     font-weight: bold;
+                    padding: 0 5px 0 0;
+                    text-wrap: balance;
+                    word-wrap: break-word;
                 }
                 
                 i{

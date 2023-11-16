@@ -9,7 +9,7 @@ export const store = reactive({
   },
   genreEndPoint: {
     movie: "genre/movie/list",
-    serie: "genre/serie/list",
+    serie: "genre/tv/list",
   },
   adult: "?include_adult=true",
   params: {
