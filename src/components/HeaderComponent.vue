@@ -1,5 +1,5 @@
 <template>
-    <div class="wrapper">
+    <div class="wrapper sticky-top">
         <ul class="d-flex justify-content-between align-items-center">
             <li><img src="/images/logo.png" alt="Logo"></li>
             <li>Home</li>
@@ -10,8 +10,8 @@
             <li>Sfoglia per Lingua</li>
         </ul>
         <div class="d-flex justify-content-between text-light">
-            <i ref="icon" @click="expandAnimation()" class="fa-solid fa-magnifying-glass fs-4 text-light"></i>
-            <input ref="input" class="form-control d-none" type="text" placeholder="Cerca Generi, Titoli etc"
+            <i ref="icon" @click="expandAnimation()" class="fa-solid fa-magnifying-glass fs-5 text-light pt-2"></i>
+            <input ref="input" class="form-control d-none" type="text" placeholder="Cerca: Generi, Titoli, Persone"
                 v-model="this.store.params.query" @keyup.enter="$emit('enterEmit')">
             <button class="btn btn-danger mx-2" @click="$emit('searchEmit')">Cerca</button>
         </div>
@@ -45,7 +45,11 @@ import { store } from '../assets/data/store.js'
         display: flex;
         justify-content: space-between;
         align-items: center;
+        position: fixed;
+        width: 100%;
         height: 100px;
+        z-index: 100;
+        margin: 0;
         background: rgb(0,0,0);
         background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 58%, rgba(52,50,50,1) 100%);
 
@@ -76,12 +80,20 @@ import { store } from '../assets/data/store.js'
         div{
 
             input{
-                width: 150px;
+                width: 250px;
+                height: 30px;
+                margin-top: 5px;
+                padding-bottom: 10px;
                 background-color: $black_netflix;
-                border: 1px solid $red_netflix;
-                color: $grey_searchbar;
+                border: 1px solid white;
                 animation-name: expand;
-                animation-duration: 2s;
+                animation-duration: 0.4s;
+
+                &::placeholder{
+                    color: $grey_searchbar !important;
+                    text-align: center;
+                    line-height: 30px;
+                }
             }
 
             input:focus, textarea:focus {
@@ -93,7 +105,7 @@ import { store } from '../assets/data/store.js'
     }
     @keyframes expand{
         0% {width: 0px;}
-        100% {width: 150px;}
+        100% {width: 250px;}
     }
 
 </style>

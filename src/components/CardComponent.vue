@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 col-md-4 col-lg-3 mb-4 my-div">
+    <div class="col-12 col-md-4 col-lg-2 mb-4 my-div">
         <div class="flip">
             <div class="img-div">
                 <img :src="img + imgPath" :alt="title" v-if="imgPath">
