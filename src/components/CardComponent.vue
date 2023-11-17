@@ -46,11 +46,7 @@
                     <button @click="store.castShow = !store.castShow, givemeCast()" v-show="!store.castShow" class="btn red-netflix">Show Cast</button>
                     <p v-show="store.castShow">
                         <span>Cast: 
-                            <span id="generi" class=" fw-light">{{ castArray[0] + ' -' }}</span>
-                            <span id="generi" class=" fw-light">{{ castArray[1] + ' -' }}</span>
-                            <span id="generi" class=" fw-light">{{ castArray[2] + ' -' }}</span>
-                            <span id="generi" class=" fw-light">{{ castArray[3] + ' -' }}</span>
-                            <span id="generi" class=" fw-light">{{ castArray[4] }}</span>
+                            <span id="generi" v-for="cast in castArray" class=" fw-light">{{ cast + ' ' }}</span>
                         </span>
                     </p>
                 </div>
@@ -136,18 +132,7 @@ import axios from 'axios'
                 }
             },
             givemeCast(){
-                const castUrl = this.store.apiUrl + this.tipo + this.id + `/credits` + store.api_key
-                // axios.get(castUrl)
-                //     .then(function (response) {
-                //         console.log(response);
-                //         store.castList = response.data
-                //         console.log(store.castList)
-                //     })
-                //     .catch(function (error) {
-                //         console.log(error);
-                //     })
-                //     .finally(function () {
-                //     });
+                const castUrl = this.store.apiUrl + this.tipo + this.id + `/credits` + this.store.api_key
                 axios.get(castUrl).then((results) => {
                     this.castArray = []
                     for (let i = 0; i < 5; i++) {
