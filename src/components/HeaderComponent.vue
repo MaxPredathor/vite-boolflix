@@ -1,5 +1,6 @@
 <template>
-    <div class="wrapper sticky-top">
+    <div class="wrapper sticky-top"  @click.self="store.isActive = false"
+        @scroll="scrollHeader" :class="(scrolled ? 'bg-*' : 'gradient')">
         <ul class="d-flex justify-content-between align-items-center">
             <li><img src="/images/logo.png" alt="Logo"></li>
             <li>Home</li>
@@ -10,11 +11,11 @@
             <li>Sfoglia per Lingua</li>
         </ul>
         <div class="d-flex justify-content-between text-light">
-            <i ref="icon" @click.stop="(isActive = !isActive)" :class="(isActive ? 'd-none' : 'd-inline-block')" 
+            <i ref="icon" @click.stop="(store.isActive = !store.isActive)" :class="(store.isActive ? 'd-none' : 'd-inline-block')" 
             class="fa-solid fa-magnifying-glass fs-5 text-light pt-2"></i>
-            <input ref="input" :class="(isActive ? 'd-inline-block expand' : 'd-none')"
+            <input ref="input" :class="(store.isActive ? 'd-inline-block expand' : 'd-none')"
                 class="form-control" type="text" placeholder="Cerca: Generi, Titoli, Persone"
-                v-model="this.store.params.query" @keyup.enter="$emit('enterEmit'), (isActive = !isActive)">
+                v-model="this.store.params.query" @keyup.enter="$emit('enterEmit'), (store.isActive = !store.isActive)">
             <button class="btn btn-danger mx-2" @click="$emit('searchEmit')">Cerca</button>
         </div>
     </div>
@@ -27,10 +28,17 @@ import { store } from '../assets/data/store.js'
         data(){
             return{
                 store,
-                isActive: false
+                scrolled: false
             }
         },
         methods:{
+            scrollHeader(){
+                if(window.scrollY >= 100){
+                    this.scrolled = true
+                }else if(window.scrollY < 100){
+                    this.scrolled = false
+                }
+            }
         }
     }
 </script>
@@ -47,6 +55,10 @@ import { store } from '../assets/data/store.js'
     .revert{
         animation-name: revert;
         animation-duration: 0.4s;
+    }
+    .gradient{
+        background: rgb(0,0,0);
+        background: linear-gradient(180deg, rgba(0,0,0,1) 0%, rgba(20,20,20,1) 58%, rgba(52,50,50,1) 100%);
     }
     .wrapper{
         display: flex;

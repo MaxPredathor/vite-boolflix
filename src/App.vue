@@ -4,7 +4,7 @@
     @enter-emit="getMoviesAndSeries()"
     @search-emit="getMoviesAndSeries()" />
   </header>
-  <main>
+  <main @click="store.isActive = false">
     <section id="popular" class="container position-relative">
       <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
       <div class="row flex-nowrap overflow-hidden" ref="popular">
@@ -21,10 +21,10 @@
         :genere="popular.genre_ids"
         />
       </div>
-      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 2290)">
+      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 1710)">
         <i class="fa-solid fa-chevron-left"></i>
       </div>
-      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderPopular(0, + 2290)">
+      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderPopular(0, + 1710)">
         <i class="fa-solid fa-chevron-right"></i>
       </div>
     </section>
@@ -44,10 +44,10 @@
         :genere="movie.genre_ids"
         />
       </div>
-      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 2290)">
+      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 1710)">
         <i class="fa-solid fa-chevron-left"></i>
       </div>
-      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderMovie(0, + 2290)">
+      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderMovie(0, + 1710)">
         <i class="fa-solid fa-chevron-right"></i>
       </div>  
     </section>
@@ -67,10 +67,10 @@
         :genere="serie.genre_ids"
         />
       </div>
-      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 2290)">
+      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 1710)">
         <i class="fa-solid fa-chevron-left"></i>
       </div>
-      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderSeries(0, + 2290)">
+      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderSeries(0, + 1710)">
         <i class="fa-solid fa-chevron-right"></i>
       </div>
     </section>

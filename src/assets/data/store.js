@@ -17,8 +17,10 @@ export const store = reactive({
     language: "it-IT",
     api_key: "52dfd4e50346e927a3b341e688889302",
   },
+  isActive: false,
   paramsPopular: {
     api_key: "52dfd4e50346e927a3b341e688889302",
+    language: "it-IT",
   },
   api_key: "?api_key=52dfd4e50346e927a3b341e688889302",
   movieList: [],

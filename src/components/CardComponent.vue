@@ -5,7 +5,7 @@
                 <img :src="img + imgPath" :alt="title" v-if="imgPath">
                 <img src="/images/netflix-vertical.png" alt="PlaceHolder" v-else>
             </div>
-            <div class="hover-div">
+            <div  id="scrollbar" class="hover-div">
                 <p><span>Titolo:</span>{{ title }}</p>
                 <p><span>Titolo Originale:</span>{{ titoloOriginale }}</p>
                 <div class="flags">
@@ -43,7 +43,7 @@
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 4 && voto < 5,'fa-solid fa-star': voto > 4, 'fa-regular fa-star': voto < 5}"></i>
                 </p>
                 <p><span>Genere:</span>
-                    <span class=" fw-light" v-for="genre in genere">{{ getGenreName(genre) }}</span>
+                    <span id="generi" class=" fw-light" v-for="genre in genere">{{ getGenreName(genre) }}</span>
                 </p>
                 <p><span>Sinossi:</span>{{ desc }}</p>
             </div>
@@ -118,9 +118,30 @@ import { store } from '../assets/data/store.js'
 </script>
 
 <style lang="scss" scoped>
-@use '../assets/styles/partials/variables' as *;
+@use '../assets/styles/partials/variables' as *;    
+
+    #scrollbar::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: $black_netflix;
+    }
+
+    #scrollbar::-webkit-scrollbar
+    {
+        width: 12px;
+        background-color: $black_netflix;
+    }
+
+    #scrollbar::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #D62929;
+    }
+
     .my-div{
-        height: 500px;
+        height: 400px;
         perspective: 1000px;
 
         &:hover{
@@ -165,11 +186,15 @@ import { store } from '../assets/data/store.js'
                 overflow-y: auto;
 
                 span{
+                    color: $red_netflix;
                     display: inline-block;
                     font-weight: bold;
                     padding: 0 5px 0 0;
                     text-wrap: balance;
                     word-wrap: break-word;
+                }
+                #generi{
+                    color: white;
                 }
                 
                 i{
