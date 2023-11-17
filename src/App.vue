@@ -6,7 +6,7 @@
     @search-emit="getMoviesAndSeries()" />
   </header>
   <main @click="store.isActive = false" @scroll="scrollHeader">
-    <section id="popular" class="container position-relative">
+    <section ref="popularSection" id="popular" class="container position-relative">
       <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
       <div class="row flex-nowrap overflow-hidden" ref="popular">
         <CardComponent
@@ -22,6 +22,7 @@
         :adult="popular.adult"
         :genere="popular.genre_ids"
         :id="popular.id"
+        :tipo="'movie/'"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 1710)">
@@ -47,6 +48,7 @@
         :adult="movie.adult"
         :genere="movie.genre_ids"
         :id="movie.id"
+        :tipo="'movie/'"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 1710)">
@@ -72,6 +74,7 @@
         :adult="serie.adult"
         :genere="serie.genre_ids"
         :id="serie.id"
+        :tipo="'tv/'"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 1710)">
@@ -222,9 +225,6 @@ import axios from 'axios'
           console.log(this.store.genreList)
         })
     },
-    getCast(){
-
-    },
     filterGenres(){
       this.store.filteredGenres = []
       if(this.store.genreId != ""){
@@ -234,7 +234,7 @@ import axios from 'axios'
         this.store.isFiltered = true
       }
       
-    }
+    },
   },
   created(){
     window.addEventListener('scroll', this.scrollHeader)
@@ -242,6 +242,9 @@ import axios from 'axios'
     this.getMoviesAndSeries()
     this.getGenres()
   },
+  mounted(){
+    this.$refs.popularSectionHeight
+  }
   }
   
 </script>

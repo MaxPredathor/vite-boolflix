@@ -43,9 +43,15 @@
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 4 && voto < 5,'fa-solid fa-star': voto > 4, 'fa-regular fa-star': voto < 5}"></i>
                 </p>
                 <div>
-                    <button @click="store.castShow = !store.castShow" v-show="!store.castShow" class="btn red-netflix">Show Cast</button>
+                    <button @click="store.castShow = !store.castShow, givemeCast()" v-show="!store.castShow" class="btn red-netflix">Show Cast</button>
                     <p v-show="store.castShow">
-                        <span>Cast: {{ store.castId }}</span>
+                        <span>Cast: 
+                            <span id="generi" class=" fw-light">{{ castArray[0] + ' -' }}</span>
+                            <span id="generi" class=" fw-light">{{ castArray[1] + ' -' }}</span>
+                            <span id="generi" class=" fw-light">{{ castArray[2] + ' -' }}</span>
+                            <span id="generi" class=" fw-light">{{ castArray[3] + ' -' }}</span>
+                            <span id="generi" class=" fw-light">{{ castArray[4] }}</span>
+                        </span>
                     </p>
                 </div>
                 <p>
@@ -60,11 +66,13 @@
 
 <script>
 import { store } from '../assets/data/store.js'
+import axios from 'axios'
     export default {
         name: 'CardComponent',
         data(){
             return{
                 store,
+                castArray: [],
             }
         },
         props:{
@@ -114,6 +122,10 @@ import { store } from '../assets/data/store.js'
             id:{
                 type: Number,
                 required: true,
+            },
+            tipo:{ 
+                type: String,
+                required: true
             }
         },
         methods:{
@@ -122,7 +134,29 @@ import { store } from '../assets/data/store.js'
                 if (finder) {
                     return finder.name;
                 }
-            }
+            },
+            givemeCast(){
+                const castUrl = this.store.apiUrl + this.tipo + this.id + `/credits` + store.api_key
+                // axios.get(castUrl)
+                //     .then(function (response) {
+                //         console.log(response);
+                //         store.castList = response.data
+                //         console.log(store.castList)
+                //     })
+                //     .catch(function (error) {
+                //         console.log(error);
+                //     })
+                //     .finally(function () {
+                //     });
+                axios.get(castUrl).then((results) => {
+                    this.castArray = []
+                    for (let i = 0; i < 5; i++) {
+                        if (results.data.cast[i]) {
+                            this.castArray.push(results.data.cast[i].name)
+                        }
+                    } 
+                })
+            },
         }
     }
 </script>
