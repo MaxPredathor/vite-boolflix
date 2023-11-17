@@ -1,6 +1,6 @@
 <template>
     <div class="wrapper sticky-top"  @click.self="store.isActive = false"
-        @scroll="scrollHeader" :class="(scrolled ? 'bg-*' : 'gradient')">
+        :class="(store.scrolled ?  'gradient' : 'bg-*')">
         <ul class="d-flex justify-content-between align-items-center">
             <li><img src="/images/logo.png" alt="Logo"></li>
             <li>Home</li>
@@ -28,17 +28,11 @@ import { store } from '../assets/data/store.js'
         data(){
             return{
                 store,
-                scrolled: false
+                
             }
         },
         methods:{
-            scrollHeader(){
-                if(window.scrollY >= 100){
-                    this.scrolled = true
-                }else if(window.scrollY < 100){
-                    this.scrolled = false
-                }
-            }
+            
         }
     }
 </script>

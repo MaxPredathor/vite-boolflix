@@ -4,7 +4,7 @@
     @enter-emit="getMoviesAndSeries()"
     @search-emit="getMoviesAndSeries()" />
   </header>
-  <main @click="store.isActive = false">
+  <main @click="store.isActive = false" @scroll="scrollHeader">
     <section id="popular" class="container position-relative">
       <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
       <div class="row flex-nowrap overflow-hidden" ref="popular">
@@ -94,6 +94,14 @@ import axios from 'axios'
     HeaderComponent,
   },
   methods: {
+    scrollHeader(){
+      console.log('ci sono')
+      if(window.scrollY >= 100){
+          this.store.scrolled = true
+      }else if(window.scrollY < 100){
+          this.store.scrolled = false
+      }
+            },
     getMoviesAndSeries(){
       this.store.movieList = []
       this.store.seriesList = []
@@ -210,6 +218,7 @@ import axios from 'axios'
     }
   },
   created(){
+    window.addEventListener('scroll', this.scrollHeader)
     this.getPopular()
     this.getMoviesAndSeries()
     this.getGenres()
