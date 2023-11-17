@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 col-md-4 col-lg-2 mb-4 my-div">
+    <div class="col-12 col-md-4 col-lg-2 mb-4 my-div" @mouseover="store.castId = id" @mouseleave="store.castShow = false">
         <div class="flip">
             <div class="img-div">
                 <img :src="img + imgPath" :alt="title" v-if="imgPath">
@@ -42,7 +42,14 @@
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 3 && voto < 4,'fa-solid fa-star': voto > 3, 'fa-regular fa-star': voto < 4}"></i>
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 4 && voto < 5,'fa-solid fa-star': voto > 4, 'fa-regular fa-star': voto < 5}"></i>
                 </p>
-                <p><span>Genere:</span>
+                <div>
+                    <button @click="store.castShow = !store.castShow" v-show="!store.castShow" class="btn red-netflix">Show Cast</button>
+                    <p v-show="store.castShow">
+                        <span>Cast: {{ store.castId }}</span>
+                    </p>
+                </div>
+                <p>
+                    <span>Genere:</span>
                     <span id="generi" class=" fw-light" v-for="genre in genere">{{ getGenreName(genre) }}</span>
                 </p>
                 <p><span>Sinossi:</span>{{ desc }}</p>
@@ -103,7 +110,10 @@ import { store } from '../assets/data/store.js'
             genere:{
                 type: Array,
                 required: false,
-                default: "No Genre Found"
+            },
+            id:{
+                type: Number,
+                required: true,
             }
         },
         methods:{
@@ -138,6 +148,19 @@ import { store } from '../assets/data/store.js'
         border-radius: 10px;
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
         background-color: #D62929;
+    }
+
+    .red-netflix{
+        background-color: $red_netflix;
+        color: white;
+        padding: 5px 10px;
+        margin-bottom: 10px;
+
+        &:hover{
+            background-color: #7f050c;
+            transform: scale(110%);
+            transition: all 0.2s ease;
+        }
     }
 
     .my-div{

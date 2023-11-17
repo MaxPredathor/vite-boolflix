@@ -1,6 +1,7 @@
 <template>
   <header>
     <HeaderComponent 
+    @filter-emit="filterGenres"
     @enter-emit="getMoviesAndSeries()"
     @search-emit="getMoviesAndSeries()" />
   </header>
@@ -8,7 +9,8 @@
     <section id="popular" class="container position-relative">
       <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
       <div class="row flex-nowrap overflow-hidden" ref="popular">
-        <CardComponent 
+        <CardComponent
+        v-show="(store.isFiltered || popular.genre_ids.includes(store.filteredGenres[0].id))"
         v-for="popular in store.popularList" :key="popular.id"
         :img="this.store.img"
         :imgPath="popular.poster_path"
@@ -19,6 +21,7 @@
         :desc="popular.overview"
         :adult="popular.adult"
         :genere="popular.genre_ids"
+        :id="popular.id"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 1710)">
@@ -32,6 +35,7 @@
       <h2 class="fw-bold fs-3 text-light">Movies</h2>
       <div class="row flex-nowrap overflow-hidden" ref="movie">
         <CardComponent 
+        v-show="(store.isFiltered || movie.genre_ids.includes(store.filteredGenres[0].id))"
         v-for="movie in store.movieList" :key="movie.id"
         :img="this.store.img"
         :imgPath="movie.poster_path"
@@ -42,6 +46,7 @@
         :desc="movie.overview"
         :adult="movie.adult"
         :genere="movie.genre_ids"
+        :id="movie.id"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 1710)">
@@ -55,6 +60,7 @@
       <h2 class="fw-bold fs-3 text-light">Series</h2>
       <div class="row flex-nowrap overflow-hidden" ref="series">
         <CardComponent 
+        v-show="(store.isFiltered || serie.genre_ids.includes(store.filteredGenres[0].id))"
         v-for="serie in store.seriesList" :key="serie.id"
         :img="this.store.img"
         :imgPath="serie.poster_path"
@@ -65,6 +71,7 @@
         :desc="serie.overview"
         :adult="serie.adult"
         :genere="serie.genre_ids"
+        :id="serie.id"
         />
       </div>
       <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 1710)">
@@ -95,13 +102,12 @@ import axios from 'axios'
   },
   methods: {
     scrollHeader(){
-      console.log('ci sono')
       if(window.scrollY >= 100){
           this.store.scrolled = true
       }else if(window.scrollY < 100){
           this.store.scrolled = false
       }
-            },
+    },
     getMoviesAndSeries(){
       this.store.movieList = []
       this.store.seriesList = []
@@ -215,6 +221,19 @@ import axios from 'axios'
           );
           console.log(this.store.genreList)
         })
+    },
+    getCast(){
+
+    },
+    filterGenres(){
+      this.store.filteredGenres = []
+      if(this.store.genreId != ""){
+        this.store.isFiltered = false
+        this.store.filteredGenres = this.store.genreList.filter((el) => el.id == this.store.genreId)
+      }else {
+        this.store.isFiltered = true
+      }
+      
     }
   },
   created(){

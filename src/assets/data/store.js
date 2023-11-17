@@ -19,6 +19,10 @@ export const store = reactive({
   },
   scrolled: false,
   isActive: false,
+  castShow: false,
+  isFiltered: true,
+  castId: null,
+  genreId: "",
   paramsPopular: {
     api_key: "52dfd4e50346e927a3b341e688889302",
     language: "it-IT",
@@ -28,6 +32,7 @@ export const store = reactive({
   seriesList: [],
   popularList: [],
   genreList: [],
+  filteredGenres: [],
   img: "https://image.tmdb.org/t/p/w300",
 });
 

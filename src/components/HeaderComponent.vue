@@ -11,6 +11,12 @@
             <li>Sfoglia per Lingua</li>
         </ul>
         <div class="d-flex justify-content-between text-light">
+            <div>
+                <select v-model="store.genreId" @change="$emit('filterEmit')">
+                    <option value="">All</option>
+                    <option v-for="genre in store.genreList" :value="genre.id">{{ genre.name }}</option>
+                </select>
+            </div>
             <i ref="icon" @click.stop="(store.isActive = !store.isActive)" :class="(store.isActive ? 'd-none' : 'd-inline-block')" 
             class="fa-solid fa-magnifying-glass fs-5 text-light pt-2"></i>
             <input ref="input" :class="(store.isActive ? 'd-inline-block expand' : 'd-none')"
@@ -27,12 +33,11 @@ import { store } from '../assets/data/store.js'
         name: 'HeaderComponent',
         data(){
             return{
-                store,
-                
+                store,  
             }
         },
         methods:{
-            
+  
         }
     }
 </script>
