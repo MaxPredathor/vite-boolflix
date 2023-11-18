@@ -21,6 +21,8 @@ export const store = reactive({
   isActive: false,
   castShow: false,
   isFiltered: true,
+  splashTime: true,
+  login: true,
   castId: null,
   genreId: "",
   paramsPopular: {

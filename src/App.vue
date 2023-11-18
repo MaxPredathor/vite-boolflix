@@ -1,95 +1,99 @@
 <template>
-  <header>
-    <HeaderComponent 
-    @filter-emit="filterGenres"
-    @enter-emit="getMoviesAndSeries()"
-    @search-emit="getMoviesAndSeries()" />
-  </header>
-  <main @click="store.isActive = false" @scroll="scrollHeader">
-    <section ref="popularSection" id="popular" class="container position-relative">
-      <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
-      <div class="row flex-nowrap overflow-hidden" ref="popular">
-        <CardComponent
-        v-show="(store.isFiltered || popular.genre_ids.includes(store.filteredGenres[0].id))"
-        v-for="popular in store.popularList" :key="popular.id"
-        :img="this.store.img"
-        :imgPath="popular.poster_path"
-        :title="popular.title"
-        :titoloOriginale="popular.original_title"
-        :language="popular.original_language"
-        :voto="roundVoto(popular.vote_average)"
-        :desc="popular.overview"
-        :adult="popular.adult"
-        :genere="popular.genre_ids"
-        :id="popular.id"
-        :tipo="'movie/'"
-        />
-      </div>
-      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 1710)">
-        <i class="fa-solid fa-chevron-left"></i>
-      </div>
-      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderPopular(0, + 1710)">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
-    </section>
-    <section id="movie" class="container position-relative">
-      <h2 class="fw-bold fs-3 text-light">Movies</h2>
-      <div class="row flex-nowrap overflow-hidden" ref="movie">
-        <CardComponent 
-        v-show="(store.isFiltered || movie.genre_ids.includes(store.filteredGenres[0].id))"
-        v-for="movie in store.movieList" :key="movie.id"
-        :img="this.store.img"
-        :imgPath="movie.poster_path"
-        :title="movie.title"
-        :titoloOriginale="movie.original_title"
-        :language="movie.original_language"
-        :voto="roundVoto(movie.vote_average)"
-        :desc="movie.overview"
-        :adult="movie.adult"
-        :genere="movie.genre_ids"
-        :id="movie.id"
-        :tipo="'movie/'"
-        />
-      </div>
-      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 1710)">
-        <i class="fa-solid fa-chevron-left"></i>
-      </div>
-      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderMovie(0, + 1710)">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>  
-    </section>
-    <section id="series" class="container position-relative">
-      <h2 class="fw-bold fs-3 text-light">Series</h2>
-      <div class="row flex-nowrap overflow-hidden" ref="series">
-        <CardComponent 
-        v-show="(store.isFiltered || serie.genre_ids.includes(store.filteredGenres[0].id))"
-        v-for="serie in store.seriesList" :key="serie.id"
-        :img="this.store.img"
-        :imgPath="serie.poster_path"
-        :title="serie.name"
-        :titoloOriginale="serie.original_name"
-        :language="serie.original_language"
-        :voto="roundVoto(serie.vote_average)"
-        :desc="serie.overview"
-        :adult="serie.adult"
-        :genere="serie.genre_ids"
-        :id="serie.id"
-        :tipo="'tv/'"
-        />
-      </div>
-      <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 1710)">
-        <i class="fa-solid fa-chevron-left"></i>
-      </div>
-      <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderSeries(0, + 1710)">
-        <i class="fa-solid fa-chevron-right"></i>
-      </div>
-    </section>
-  </main>
+  <SplashComponent v-if="store.splashTime" />
+  <div v-else>
+    <header>
+      <HeaderComponent 
+      @filter-emit="filterGenres"
+      @enter-emit="getMoviesAndSeries()"
+      @search-emit="getMoviesAndSeries()" />
+    </header>
+    <main @click="store.isActive = false" @scroll="scrollHeader">
+      <section ref="popularSection" id="popular" class="container position-relative">
+        <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
+        <div class="row flex-nowrap overflow-hidden" ref="popular">
+          <CardComponent
+          v-show="(store.isFiltered || popular.genre_ids.includes(store.filteredGenres[0].id))"
+          v-for="popular in store.popularList" :key="popular.id"
+          :img="this.store.img"
+          :imgPath="popular.poster_path"
+          :title="popular.title"
+          :titoloOriginale="popular.original_title"
+          :language="popular.original_language"
+          :voto="roundVoto(popular.vote_average)"
+          :desc="popular.overview"
+          :adult="popular.adult"
+          :genere="popular.genre_ids"
+          :id="popular.id"
+          :tipo="'movie/'"
+          />
+        </div>
+        <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 1710)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderPopular(0, + 1710)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </section>
+      <section id="movie" class="container position-relative">
+        <h2 class="fw-bold fs-3 text-light">Movies</h2>
+        <div class="row flex-nowrap overflow-hidden" ref="movie">
+          <CardComponent 
+          v-show="(store.isFiltered || movie.genre_ids.includes(store.filteredGenres[0].id))"
+          v-for="movie in store.movieList" :key="movie.id"
+          :img="this.store.img"
+          :imgPath="movie.poster_path"
+          :title="movie.title"
+          :titoloOriginale="movie.original_title"
+          :language="movie.original_language"
+          :voto="roundVoto(movie.vote_average)"
+          :desc="movie.overview"
+          :adult="movie.adult"
+          :genere="movie.genre_ids"
+          :id="movie.id"
+          :tipo="'movie/'"
+          />
+        </div>
+        <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 1710)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderMovie(0, + 1710)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>  
+      </section>
+      <section id="series" class="container position-relative">
+        <h2 class="fw-bold fs-3 text-light">Series</h2>
+        <div class="row flex-nowrap overflow-hidden" ref="series">
+          <CardComponent 
+          v-show="(store.isFiltered || serie.genre_ids.includes(store.filteredGenres[0].id))"
+          v-for="serie in store.seriesList" :key="serie.id"
+          :img="this.store.img"
+          :imgPath="serie.poster_path"
+          :title="serie.name"
+          :titoloOriginale="serie.original_name"
+          :language="serie.original_language"
+          :voto="roundVoto(serie.vote_average)"
+          :desc="serie.overview"
+          :adult="serie.adult"
+          :genere="serie.genre_ids"
+          :id="serie.id"
+          :tipo="'tv/'"
+          />
+        </div>
+        <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 1710)">
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderSeries(0, + 1710)">
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </section>
+    </main>
+  </div>
 </template>
 
 <script>
 import CardComponent from './components/CardComponent.vue'
 import HeaderComponent from './components/HeaderComponent.vue'
+import SplashComponent from './components/SplashComponent.vue'
 import { store } from './assets/data/store.js'
 import axios from 'axios'
   export default {
@@ -102,6 +106,7 @@ import axios from 'axios'
   components: {
     CardComponent,
     HeaderComponent,
+    SplashComponent
   },
   methods: {
     scrollHeader(){
@@ -230,6 +235,10 @@ import axios from 'axios'
       if(this.store.genreId != ""){
         this.store.isFiltered = false
         this.store.filteredGenres = this.store.genreList.filter((el) => el.id == this.store.genreId)
+        console.log(this.store.filteredGenres)
+        // if(this.store.genreId == id){
+
+        // }
       }else {
         this.store.isFiltered = true
       }
@@ -242,9 +251,9 @@ import axios from 'axios'
     this.getMoviesAndSeries()
     this.getGenres()
   },
-  mounted(){
-    this.$refs.popularSectionHeight
-  }
+  // mounted(){
+  //   this.$refs.popularSectionHeight
+  // }
   }
   
 </script>

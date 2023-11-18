@@ -2,7 +2,11 @@
     <div class="wrapper sticky-top"  @click.self="store.isActive = false"
         :class="(store.scrolled ?  'gradient' : 'bg-*')">
         <ul class="d-flex justify-content-between align-items-center">
-            <li><img src="/images/logo.png" alt="Logo"></li>
+            <li>
+                <a href="index.html">
+                    <img src="/images/logo.png" alt="Logo">
+                </a>
+            </li>
             <li>Home</li>
             <li>Serie Tv</li>
             <li>Film</li>

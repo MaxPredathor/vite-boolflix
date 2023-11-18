@@ -1,5 +1,5 @@
 <template>
-    <div class="col-12 col-md-4 col-lg-2 mb-4 my-div" @mouseover="store.castId = id" @mouseleave="store.castShow = false">
+    <div class="col-12 col-md-4 col-lg-2 my-5 my-div" @mouseover="store.castId = id" @mouseleave="store.castShow = false">
         <div class="flip">
             <div class="img-div">
                 <img :src="img + imgPath" :alt="title" v-if="imgPath">
@@ -183,7 +183,7 @@ import axios from 'axios'
     }
 
     .my-div{
-        height: 400px;
+        height: 450px;
         perspective: 1000px;
 
         &:hover{
