@@ -78,7 +78,12 @@ import { store } from '../assets/data/store.js'
         background-color: $black_netflix;
         color: white;
         border: none;
+        font-weight: 600;
 
+        &:hover{
+            color: $grey_searchbar;
+        }
+        
         &:focus{
             border: none;
         }
@@ -121,7 +126,7 @@ import { store } from '../assets/data/store.js'
             li{
                 max-width: 200px;
                 font-size: 1.1em;
-                font-weight: 400;
+                font-weight: 600;
                 color: white;
                 padding: 0 10px;
                 cursor: pointer;

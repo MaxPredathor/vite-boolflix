@@ -91,7 +91,7 @@
       </section>
       <section id="giga-marginone" class="justify-content-center align-items-center" :class="((store.popularList.length === 0 && store.genreId === '' && store.movieList.length === 0 && store.       seriesList.length === 0) || (!store.popularIdList.includes(store.genreId) && !store.seriesIdList.includes(store.genreId) && !store.movieIdList.includes(store.genreId)) && store.genreId != '' ? 'd-flex' : 'd-none')">
         <div id="no-result">
-          <h2 class="text-light">Wow, Such Empty!</h2>
+          <h2 class="text-light">Wow, Such Empty</h2>
           <i class="fa-solid fa-triangle-exclamation" style="color: #e40813;"></i>
         </div>
       </section>
