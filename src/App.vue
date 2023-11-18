@@ -11,7 +11,7 @@
       <section id="jumbo">
 
       </section>
-      <section ref="popularSection" id="popular" class="container position-relative" v-show="(store.popularList.length > 0 && store.genreId === '') || (store.popularIdList.includes(store.genreId))">
+      <section id="popular" class="container position-relative" v-show="(store.popularList.length > 0 && store.genreId === '') || (store.popularIdList.includes(store.genreId))">
         <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
         <div class="row flex-nowrap overflow-hidden" ref="popular">
           <CardComponent
@@ -89,6 +89,19 @@
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </section>
+      <section id="giga-marginone" class="justify-content-center align-items-center" :class="((store.popularList.length === 0 && store.genreId === '' && store.movieList.length === 0 && store.       seriesList.length === 0) || (!store.popularIdList.includes(store.genreId) && !store.seriesIdList.includes(store.genreId) && !store.movieIdList.includes(store.genreId)) && store.genreId != '' ? 'd-flex' : 'd-none')">
+        <div id="no-result">
+          <h2 class="text-light">Wow, Such Empty!</h2>
+          <i class="fa-solid fa-triangle-exclamation" style="color: #e40813;"></i>
+        </div>
+      </section>
+      <section class="justify-content-center align-items-center" :class="((store.genreId === '' && store.movieList.length === 0 && store.seriesList.length === 0) || (!store.seriesIdList.includes(store.genreId) && !store.movieIdList.includes(store.genreId)) && store.popularIdList.includes(store.genreId) && store.genreId != '' ? 'd-flex' : 'd-none')">
+        <div id="no-result">
+          <h2 class="text-light">Nessun risultato trovato!</h2>
+          <i class="fa-solid fa-triangle-exclamation" style="color: #e40813;"></i>
+        </div>
+        
+      </section>
     </main>
   </div>
 </template>
@@ -132,8 +145,7 @@ import axios from 'axios'
           for(let x = 0; x < response.data.results.length; x++){
             for(let i = 0; i < response.data.results[x].genre_ids.length; i++){
               store.movieIdList.push(response.data.results[x].genre_ids[i])
-          }
-
+            }
           }
           console.log(store.movieIdList)
         })
@@ -153,8 +165,7 @@ import axios from 'axios'
         for(let x = 0; x < response.data.results.length; x++){
             for(let i = 0; i < response.data.results[x].genre_ids.length; i++){
               store.seriesIdList.push(response.data.results[x].genre_ids[i])
-        }
-
+          }
         }
       })
       .catch(function (error) {
@@ -175,8 +186,7 @@ import axios from 'axios'
           for(let x = 0; x < response.data.results.length; x++){
             for(let i = 0; i < response.data.results[x].genre_ids.length; i++){
               store.popularIdList.push(response.data.results[x].genre_ids[i])
-          }
-
+            }
           }
         })
         .catch(function (error) {
@@ -276,16 +286,36 @@ import axios from 'axios'
     this.getMoviesAndSeries()
     this.getGenres()
   },
-  // mounted(){
-  //   this.$refs.popularSectionHeight
-  // }
   }
   
 </script>
 
 <style lang="scss" scoped>
+@use './assets/styles/partials/variables' as *;  
+
   header{
     margin-bottom: 110px;
+  }
+
+  #giga-marginone{
+    width: 100%;
+    height: 80vh;
+    display: grid;
+    place-items: center;
+  }
+
+  #no-result{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px dashed $red_netflix;
+    border-radius: 1em;
+
+    i{
+      font-size: 130px;
+      text-align: center;
+    }
   }
   #prev{
     width: 30px;
