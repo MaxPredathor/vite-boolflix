@@ -193,7 +193,7 @@ import axios from 'axios'
     }
 
     .my-div{
-        height: 450px;
+        aspect-ratio: 3 / 4;
         perspective: 1000px;
 
         &:hover{
