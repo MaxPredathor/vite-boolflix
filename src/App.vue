@@ -7,7 +7,7 @@
       @enter-emit="getMoviesAndSeries()"
       @search-emit="getMoviesAndSeries()" />
     </header>
-    <main @click="store.isActive = false" @scroll="scrollHeader">
+    <main id="scrollbar" @click="store.isActive = false" @scroll="scrollHeader">
       <section id="jumbo">
 
       </section>

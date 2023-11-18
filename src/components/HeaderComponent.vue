@@ -14,7 +14,7 @@
             <li>La mia Lista</li>
             <li>Sfoglia per Lingua</li>
             <li>
-                <select v-model="store.genreId" @change="$emit('filterEmit')">
+                <select id="scrollbar" v-model="store.genreId" @change="$emit('filterEmit')">
                     <option value="">All</option>
                     <option v-for="genre in store.genreList" :value="genre.id">{{ genre.name }}</option>
                 </select>
@@ -52,6 +52,41 @@ import { store } from '../assets/data/store.js'
 @use '../assets/styles/partials/variables' as *;
     .w-0{
         width: 0px !important;
+    }
+
+    #scrollbar::-webkit-scrollbar-track
+    {
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        border-radius: 10px;
+        background-color: $black_netflix;
+    }
+
+    #scrollbar::-webkit-scrollbar
+    {
+        width: 12px;
+        background-color: $black_netflix;
+    }
+
+    #scrollbar::-webkit-scrollbar-thumb
+    {
+        border-radius: 10px;
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        background-color: #D62929;
+    }
+
+    select{
+        background-color: $black_netflix;
+        color: white;
+        border: none;
+
+        &:focus{
+            border: none;
+        }
+
+        *{
+            border: none;
+
+        }
     }
     .expand{
         animation-name: expand;
