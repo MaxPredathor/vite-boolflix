@@ -124,6 +124,9 @@ import axios from 'axios'
                 required: true
             }
         },
+        mounted(){
+            this.getVideos
+        },
         methods:{
             getGenreName(id) {
                 const finder = this.store.genreList.find((el) => el.id == id)
@@ -140,6 +143,13 @@ import axios from 'axios'
                             this.castArray.push(results.data.cast[i].name)
                         }
                     } 
+                })
+            },
+            getVideos(){
+                const castUrl = this.store.apiUrl + this.tipo + this.id + `/videos` + this.store.api_key
+                    axios.get(castUrl).then((results) => {
+                        console.log(results.data)
+                        
                 })
             },
         }

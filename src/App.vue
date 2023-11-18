@@ -8,7 +8,10 @@
       @search-emit="getMoviesAndSeries()" />
     </header>
     <main @click="store.isActive = false" @scroll="scrollHeader">
-      <section ref="popularSection" id="popular" class="container position-relative">
+      <section id="jumbo">
+
+      </section>
+      <section ref="popularSection" id="popular" class="container position-relative" v-show="(store.popularList.length > 0 && store.genreId === '') || (store.popularIdList.includes(store.genreId))">
         <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
         <div class="row flex-nowrap overflow-hidden" ref="popular">
           <CardComponent
@@ -27,14 +30,14 @@
           :tipo="'movie/'"
           />
         </div>
-        <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 1710)">
+        <div class="justify-content-center align-items-center" id="prev" @click="scrollSliderPopular(0, - 1710)" :class="(store.popularList.length > 6 ? 'd-flex' : 'd-none')">
           <i class="fa-solid fa-chevron-left"></i>
         </div>
-        <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderPopular(0, + 1710)">
+        <div class="justify-content-center align-items-center" id="next" @click="scrollSliderPopular(0, + 1710)"  :class="(store.popularList.length > 6 ? 'd-flex' : 'd-none')">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </section>
-      <section id="movie" class="container position-relative">
+      <section id="movie" class="container position-relative" v-show="(store.movieList.length > 0 && store.genreId === '') || (store.movieIdList.includes(store.genreId))">
         <h2 class="fw-bold fs-3 text-light">Movies</h2>
         <div class="row flex-nowrap overflow-hidden" ref="movie">
           <CardComponent 
@@ -53,14 +56,14 @@
           :tipo="'movie/'"
           />
         </div>
-        <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 1710)">
+        <div class="justify-content-center align-items-center" id="prev" @click="scrollSliderMovie(0, - 1710)" :class="(store.movieList.length > 6 ? 'd-flex' : 'd-none')">
           <i class="fa-solid fa-chevron-left"></i>
         </div>
-        <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderMovie(0, + 1710)">
+        <div class="justify-content-center align-items-center" id="next" @click="scrollSliderMovie(0, + 1710)" :class="(store.movieList.length > 6 ? 'd-flex' : 'd-none')">
           <i class="fa-solid fa-chevron-right"></i>
         </div>  
       </section>
-      <section id="series" class="container position-relative">
+      <section id="series" class="container position-relative" v-show="(store.seriesList.length > 0 && store.genreId === '') || (store.seriesIdList.includes(store.genreId))">
         <h2 class="fw-bold fs-3 text-light">Series</h2>
         <div class="row flex-nowrap overflow-hidden" ref="series">
           <CardComponent 
@@ -79,10 +82,10 @@
           :tipo="'tv/'"
           />
         </div>
-        <div class="d-flex justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 1710)">
+        <div class="justify-content-center align-items-center" id="prev" @click="scrollSliderSeries(0, - 1710)" :class="(store.seriesList.length > 6 ? 'd-flex' : 'd-none')">
           <i class="fa-solid fa-chevron-left"></i>
         </div>
-        <div class="d-flex justify-content-center align-items-center" id="next" @click="scrollSliderSeries(0, + 1710)">
+        <div class="justify-content-center align-items-center" id="next" @click="scrollSliderSeries(0, + 1710)" :class="(store.seriesList.length > 6 ? 'd-flex' : 'd-none')">
           <i class="fa-solid fa-chevron-right"></i>
         </div>
       </section>
@@ -119,11 +122,20 @@ import axios from 'axios'
     getMoviesAndSeries(){
       this.store.movieList = []
       this.store.seriesList = []
+      this.store.movieIdList = []
+      this.store.seriesIdList = []
       const movieUrl = this.store.apiUrl + this.store.endPoint.movie
       axios.get(movieUrl, {params: this.store.params})
         .then(function (response) {
           store.movieList = response.data.results
           console.log(response.data.results);
+          for(let x = 0; x < response.data.results.length; x++){
+            for(let i = 0; i < response.data.results[x].genre_ids.length; i++){
+              store.movieIdList.push(response.data.results[x].genre_ids[i])
+          }
+
+          }
+          console.log(store.movieIdList)
         })
         .catch(function (error) {
           // handle error
@@ -138,6 +150,12 @@ import axios from 'axios'
       .then(function (response) {
         console.log(response.data.results);
         store.seriesList = response.data.results
+        for(let x = 0; x < response.data.results.length; x++){
+            for(let i = 0; i < response.data.results[x].genre_ids.length; i++){
+              store.seriesIdList.push(response.data.results[x].genre_ids[i])
+        }
+
+        }
       })
       .catch(function (error) {
         // handle error
@@ -154,6 +172,12 @@ import axios from 'axios'
         .then(function (response) {
           console.log(response.data.results);
           store.popularList = response.data.results
+          for(let x = 0; x < response.data.results.length; x++){
+            for(let i = 0; i < response.data.results[x].genre_ids.length; i++){
+              store.popularIdList.push(response.data.results[x].genre_ids[i])
+          }
+
+          }
         })
         .catch(function (error) {
           // handle error
@@ -235,7 +259,8 @@ import axios from 'axios'
       if(this.store.genreId != ""){
         this.store.isFiltered = false
         this.store.filteredGenres = this.store.genreList.filter((el) => el.id == this.store.genreId)
-        console.log(this.store.filteredGenres)
+        // console.log(this.store.filteredGenres)
+        console.log(store.genreId)
         // if(this.store.genreId == id){
 
         // }

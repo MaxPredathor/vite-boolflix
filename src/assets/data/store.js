@@ -36,7 +36,12 @@ export const store = reactive({
   genreList: [],
   filteredGenres: [],
   castList: [],
+  movieIdList: [],
+  seriesIdList: [],
+  popularIdList: [],
   img: "https://image.tmdb.org/t/p/w300",
 });
 
 // https://api.themoviedb.org/3/movie/136244/credits?api_key=52dfd4e50346e927a3b341e688889302
+// https://www.youtube.com/watch?v=UdFeVo0cODs
+// https://api.themoviedb.org/3/movie/872585/videos?api_key=52dfd4e50346e927a3b341e688889302

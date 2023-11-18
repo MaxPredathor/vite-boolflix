@@ -21,8 +21,10 @@
             </li>
         </ul>
         <div class="d-flex justify-content-between text-light">
-            <i ref="icon" @click.stop="(store.isActive = !store.isActive)" :class="(store.isActive ? 'd-none' : 'd-inline-block')" 
-            class="fa-solid fa-magnifying-glass fs-5 text-light pt-2"></i>
+            <i ref="icon" @click.stop="(store.isActive = !store.isActive)" 
+                :class="(store.isActive ? 'd-none' : 'd-inline-block')" 
+                class="fa-solid fa-magnifying-glass fs-5 text-light pt-2">
+            </i>
             <input ref="input" :class="(store.isActive ? 'd-inline-block expand' : 'd-none')"
                 class="form-control" type="text" placeholder="Cerca: Generi, Titoli, Persone"
                 v-model="this.store.params.query" @keyup.enter="$emit('enterEmit'), (store.isActive = !store.isActive)">
@@ -101,6 +103,16 @@ import { store } from '../assets/data/store.js'
 
             i{
                 cursor: pointer;
+            }
+
+            button{
+                background-color: $red_netflix;
+
+                &:hover{
+                    background-color: #7f050c;
+                    transform: scale(110%);
+                    transition: all 0.2s ease;
+                }
             }
 
             input{
