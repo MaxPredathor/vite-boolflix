@@ -1,9 +1,9 @@
 <template>
     <div class="position-relative">
         <iframe :src="store.videoYoutubeUrl" frameborder="0"></iframe>
-        <div class="cover"></div>
-        <div class="cover2"></div>
-        <div class="cover3"></div>
+        <div v-show="store.videoKey || store.backUpVidKey" class="cover"></div>
+        <div v-show="store.videoKey || store.backUpVidKey" class="cover2"></div>
+        <div v-show="store.videoKey || store.backUpVidKey" class="cover3"></div>
     </div>
 </template>
 

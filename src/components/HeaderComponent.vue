@@ -30,6 +30,7 @@
                 class="form-control" type="text" placeholder="Cerca: Generi, Titoli, Persone"
                 v-model="this.store.params.query" @keyup.enter="$emit('enterEmit'), (store.isActive = !store.isActive)">
             <button class="btn btn-danger mx-2" @click="$emit('searchEmit')">Cerca</button>
+            <img class="mx-2" src="/images/profile-pic.png" :width="40" alt="Profile">
         </div>
     </div>
 </template>

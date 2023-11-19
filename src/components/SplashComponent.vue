@@ -5,6 +5,7 @@
             <div id="img-container" @click="clickEvent">
                 <img src="/images/profile-pic.png" alt="Profile Pic">
             </div>
+            <h4 class="text-light pt-4">Max</h4>
         </div>
         <video v-show="!store.login" ref="myVideo">
             <source src="/images/logo-video.mp4" type="video/mp4">
