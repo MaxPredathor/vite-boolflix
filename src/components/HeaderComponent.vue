@@ -166,7 +166,7 @@ import { store } from '../assets/data/store.js'
                 margin-top: 5px;
                 padding-bottom: 10px;
                 border: 1px solid white;
-                color: white;
+                color: black;
 
                 &::placeholder{
                     color: $grey_searchbar !important;
