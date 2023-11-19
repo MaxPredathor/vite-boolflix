@@ -112,7 +112,7 @@ import { store } from '../assets/data/store.js'
         position: fixed;
         width: 100%;
         height: 100px;
-        z-index: 100;
+        z-index: 600;
         margin: 0;
 
         ul{

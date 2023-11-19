@@ -42,7 +42,6 @@
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 3 && voto < 4,'fa-solid fa-star': voto > 3, 'fa-regular fa-star': voto < 4}"></i>
                     <i :class="{'fa-solid fa-star-half-stroke': voto > 4 && voto < 5,'fa-solid fa-star': voto > 4, 'fa-regular fa-star': voto < 5}"></i>
                 </p>
-                <p>{{ id }}</p>
                 <div>
                     <button @click="store.castShow = !store.castShow, givemeCast()" v-show="!store.castShow" class="btn red-netflix">Show Cast</button>
                     <p v-show="store.castShow">

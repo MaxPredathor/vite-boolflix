@@ -9,12 +9,13 @@
     </header>
     <main id="scrollbar" @click="store.isActive = false" @scroll="scrollHeader">
       <section id="jumbo">
-
+        <JumboVideo />
       </section>
       <section id="popular" class="container position-relative" v-show="(store.popularList.length > 0 && store.genreId === '') || (store.popularIdList.includes(store.genreId))">
         <h2 class="fw-bold fs-3 text-light my-3">Populars</h2>
         <div class="row flex-nowrap overflow-hidden" ref="popular">
           <CardComponent
+          @click="getVideo"
           v-show="(store.isFiltered || popular.genre_ids.includes(store.filteredGenres[0].id))"
           v-for="popular in store.popularList" :key="popular.id"
           :img="this.store.img"
@@ -42,6 +43,7 @@
         <div class="row flex-nowrap overflow-hidden" ref="movie">
           <CardComponent 
           v-show="(store.isFiltered || movie.genre_ids.includes(store.filteredGenres[0].id))"
+          @click="getVideo"
           v-for="movie in store.movieList" :key="movie.id"
           :img="this.store.img"
           :imgPath="movie.poster_path"
@@ -110,6 +112,7 @@
 import CardComponent from './components/CardComponent.vue'
 import HeaderComponent from './components/HeaderComponent.vue'
 import SplashComponent from './components/SplashComponent.vue'
+import JumboVideo from './components/JumboVideo.vue'
 import { store } from './assets/data/store.js'
 import axios from 'axios'
   export default {
@@ -117,18 +120,20 @@ import axios from 'axios'
     data(){
       return{
         store,
+        videoId: '5a0TpYSQ5qE',
     }
   },
   components: {
     CardComponent,
     HeaderComponent,
-    SplashComponent
+    SplashComponent,
+    JumboVideo
   },
   methods: {
     scrollHeader(){
-      if(window.scrollY >= 100){
+      if(window.scrollY >= 1000){
           this.store.scrolled = true
-      }else if(window.scrollY < 100){
+      }else if(window.scrollY < 1000){
           this.store.scrolled = false
       }
     },
@@ -188,6 +193,8 @@ import axios from 'axios'
               store.popularIdList.push(response.data.results[x].genre_ids[i])
             }
           }
+          store.castId = response.data.results[0].id
+          // console.log(store.castId)
         })
         .catch(function (error) {
           // handle error
@@ -279,12 +286,35 @@ import axios from 'axios'
       }
       
     },
+    getVideo(){
+      const videoUrl = this.store.apiUrl + this.store.videoEndpoint.movie + this.store.castId + this.store.videoEndpoint.video
+      axios.get(videoUrl)
+        .then(function (response) {
+          console.log(response.data.results);
+          for(let i = 0; i < response.data.results.length; i++){
+            if(response.data.results[i].name === 'Official Trailer'){
+              store.videoKey = response.data.results[i].key
+            }else{
+              store.backUpVidKey = response.data.results[i].key
+            }
+          }
+          if(store.videoKey){
+            store.videoYoutubeUrl = `https://www.youtube.com/embed/${store.videoKey}?version=3&playlist=${store.videoKey}&autoplay=1&loop=1&controls=0&rel=0&fs=0`
+          }else{
+            store.videoYoutubeUrl = `https://www.youtube.com/embed/${store.backUpVidKey}?version=3&playlist=${store.backUpVidKey}&autoplay=1&loop=1&controls=0&rel=0&fs=0`
+          }
+        })
+    },
   },
   created(){
     window.addEventListener('scroll', this.scrollHeader)
     this.getPopular()
     this.getMoviesAndSeries()
     this.getGenres()
+    setTimeout(()=> {
+      this.getVideo()
+      // console.log(store.castId)
+    }, 1000)
   },
   }
   
@@ -292,10 +322,6 @@ import axios from 'axios'
 
 <style lang="scss" scoped>
 @use './assets/styles/partials/variables' as *;  
-
-  header{
-    margin-bottom: 110px;
-  }
 
   #giga-marginone{
     width: 100%;
