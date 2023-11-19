@@ -14,7 +14,7 @@
             <li>La mia Lista</li>
             <li>Sfoglia per Lingua</li>
             <li>
-                <select :class="(store.scrolled ? 'my-bg-trasparent' : 'my-bg-black')"
+                <select class="my-bg-trasparent"
                     id="scrollbar" v-model="store.genreId" @change="$emit('filterEmit')">
                     <option value="">All</option>
                     <option v-for="genre in store.genreList" :value="genre.id">{{ genre.name }}</option>
@@ -54,10 +54,6 @@ import { store } from '../assets/data/store.js'
     .w-0{
         width: 0px !important;
     }
-    .my-bg-black{
-        background-color: black;
-    }
-
     .my-bg-trasparent{
         background-color: rgba(255, 255, 255, 0);
     }
@@ -98,7 +94,7 @@ import { store } from '../assets/data/store.js'
 
         *{
             border: none;
-
+            background-color: $black_netflix;
         }
     }
     .expand{
