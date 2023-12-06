@@ -120,7 +120,6 @@ import axios from 'axios'
     data(){
       return{
         store,
-        videoId: '5a0TpYSQ5qE',
     }
   },
   components: {
